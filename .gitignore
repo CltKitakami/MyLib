@@ -1,0 +1,14 @@
+*.o
+*.obj
+*.exe
+*.dll
+.cache
+.dmp
+scripts/MyLib.sublime-project
+scripts/MyLib.sublime-workspace
+scripts/run.bat
+scripts/run.sh
+build/
+buildLinux/
+buildMsvc/
+todo/
