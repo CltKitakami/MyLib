@@ -20,13 +20,13 @@ public:
 		typedef IteratorAdaptor<std::output_iterator_tag, BufferedFile> Iter;
 
 	public:
-		Iterator(BufferedFile *p) : Iter(p), offset(0) {}
+		Iterator(BufferedFile *p) : Iter(p), position(0) {}
 
 		Iterator(const Iterator &b) :
-			Iter(b), offset(b.offset) {}
+			Iter(b), position(b.position) {}
 
-		Iterator(const Iterator &b, size_t offset) :
-			Iter(b), offset(offset) {}
+		Iterator(const Iterator &b, PositionType position) :
+			Iter(b), position(position) {}
 
 		virtual ~Iterator() = default;
 
@@ -39,14 +39,14 @@ public:
 		{ return this->isEnd(rhs) == false; }
 
 	protected:
-		size_t offset;
+		PositionType position;
 
-		virtual void next() { ++this->offset; }
+		virtual void next() { this->position += 1; }
 
 		bool isEnd(const Iterator &rhs) const
 		{
 			if (this->Iter::ptr == rhs.Iter::ptr)
-				return this->offset == rhs.offset;
+				return this->position == rhs.position;
 			else
 				return true;
 		}
