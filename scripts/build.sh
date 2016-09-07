@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# sudo apt-get install libssl-dev libncurses5-dev zlib1g-dev
+
 cd ..
 mkdir -p buildLinux
 cd buildLinux

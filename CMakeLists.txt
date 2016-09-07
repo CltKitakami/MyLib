@@ -60,7 +60,7 @@ if(WIN32)
 		set(SYSTEM_LIBS ${SYSTEM_LIBS} bfd liberty imagehlp intl)
 	endif()
 else()
-	set(SYSTEM_LIBS pthread rt ncurses)	# apt-get install libncurses5-dev
+	set(SYSTEM_LIBS pthread rt ncurses)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX)
@@ -94,7 +94,7 @@ include_directories(SYSTEM ${EXT_INCS})
 
 # External libraries
 if(NOT WIN32)
-	find_package(ZLIB)	# apt-get install zlib1g zlib1g-dev
+	find_package(ZLIB)
 	if (ZLIB_FOUND)
 		message("zlib: yes")
 		message("ZLIB_INCLUDE_DIRS = ${ZLIB_INCLUDE_DIRS}")
