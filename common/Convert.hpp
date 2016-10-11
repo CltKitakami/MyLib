@@ -74,10 +74,10 @@ public:
 	static uint8_t inline hexToByte(uint8_t value);
 	static uint8_t inline getHexBase(uint8_t value);
 
-	_CONV_TEMPLATE_(T, int)
+	_CONV_TEMPLATE_(T, unsigned int)
 	static std::string uintToHexString(T dec);
 
-	_CONV_TEMPLATE_(T, int)
+	_CONV_TEMPLATE_(T, unsigned int)
 	static T hexStringToUint(const std::string &hex);
 
 	_CONV_TEMPLATE_(T, int)
