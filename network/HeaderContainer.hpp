@@ -39,7 +39,7 @@ public:
 	Map customFields;
 
 private:
-	inline void addFields(std::string &in, const std::string &id, const std::string &value);
+	void addFields(std::string &in, const std::string &id, const std::string &value);
 	void defaultFieldsToString(std::string &in);
 	void customFieldsToString(std::string &in);
 };

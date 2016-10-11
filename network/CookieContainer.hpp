@@ -19,15 +19,15 @@ public:
 	CookieContainer & operator = (const CookieContainer &cc) = default;
 	CookieContainer & operator = (CookieContainer &&cc) = default;
 
-	inline void add(const std::string &id, const std::string &value)
+	void add(const std::string &id, const std::string &value)
 	{ this->container[id] = value; }
 
-	inline void remove(const std::string &id)
+	void remove(const std::string &id)
 	{ this->container.erase(id); }
 
 	void addFromCookieString(const std::string &str);
 
-	inline void reset() { this->container.clear(); }
+	void reset() { this->container.clear(); }
 
 	std::string toString();
 };

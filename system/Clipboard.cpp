@@ -84,7 +84,15 @@ std::string Clipboard::getText()
 
 
 void Clipboard::setText(const char *text)
-{ setText(text, (int)::strlen(text)); }
+{
+	Clipboard::setText(text, (int)::strlen(text));
+}
+
+
+void Clipboard::setText(const std::string &text)
+{
+	Clipboard::setText(text.data(), (int)text.length());
+}
 
 
 void Clipboard::setText(const char *text, int length)

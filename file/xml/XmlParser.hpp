@@ -44,7 +44,7 @@ class XmlTagValueAst : public XmlExprAst
 public:
 	virtual bool parse(XmlContext &context);
 	virtual void generate(XmlBuilder &builder);
-	inline std::string get() { return value; }
+	std::string get() { return value; }
 };
 
 
@@ -95,7 +95,7 @@ class XmlTagBeginAst : public XmlExprAst
 public:
 	virtual bool parse(XmlContext &context);
 	virtual void generate(XmlBuilder &builder);
-	inline bool isCdata() const { return this->cdata.size() != 0; }
+	bool isCdata() const { return this->cdata.size() != 0; }
 };
 
 

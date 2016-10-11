@@ -47,7 +47,7 @@ public:
 
 	void assertType(Type type) const;
 
-	inline Type getType() const { return this->type; }
+	Type getType() const { return this->type; }
 
 	static JsonValue create(const char *str, size_t length);
 	static JsonValue create(const std::string &str) { return create(str.data(), str.length()); }
@@ -57,13 +57,13 @@ public:
 	void createString(const char *str, size_t length);
 	void createString(const std::string &str) { createString(str.data(), str.length()); }
 
-	inline void setString(const std::string &str)
+	void setString(const std::string &str)
 	{
 		assertType(STRING);
 		*(std::string *)this->value = str;
 	}
 
-	inline std::string & getString() const
+	std::string & getString() const
 	{
 		assertType(STRING);
 		return *(std::string *)this->value;
@@ -71,13 +71,13 @@ public:
 
 	void createBoolean(bool value);
 
-	inline void setBoolean(bool value)
+	void setBoolean(bool value)
 	{
 		assertType(BOOLEAN);
 		this->value = value ? (void *)1 : nullptr;
 	}
 
-	inline bool getBoolean() const
+	bool getBoolean() const
 	{
 		assertType(BOOLEAN);
 		return this->value != nullptr;
@@ -85,13 +85,13 @@ public:
 
 	void createNumber(double value);
 
-	inline void setNumber(double value)
+	void setNumber(double value)
 	{
 		assertType(NUMBER);
 		*(double *)this->value = value;
 	}
 
-	inline double getNumber() const
+	double getNumber() const
 	{
 		assertType(NUMBER);
 		return *(double *)this->value;
@@ -99,19 +99,19 @@ public:
 
 	void createArray();
 
-	inline const JsonArray * getArray() const
+	const JsonArray * getArray() const
 	{
 		assertType(ARRAY);
 		return ((Array *)this->value)->arr;
 	}
 
-	inline JsonArray * getArray()
+	JsonArray * getArray()
 	{
 		assertType(ARRAY);
 		return ((Array *)this->value)->arr;
 	}
 
-	inline JsonArrayAst * getArrayAst()
+	JsonArrayAst * getArrayAst()
 	{
 		assertType(ARRAY);
 		return ((Array *)this->value)->ast;
@@ -119,13 +119,13 @@ public:
 
 	void createObject();
 
-	inline JsonObject * getObject() const
+	JsonObject * getObject() const
 	{
 		assertType(OBJECT);
 		return ((Object *)this->value)->obj;
 	}
 
-	inline JsonObjectAst * getObjectAst()
+	JsonObjectAst * getObjectAst()
 	{
 		assertType(OBJECT);
 		return ((Object *)this->value)->ast;
@@ -153,11 +153,11 @@ class JsonArray
 	std::vector<JsonValue> array;
 public:
 	void put(const JsonValue &v) { this->array.push_back(v); }
-	inline JsonValue & get(int index) { return this->array[(unsigned)index]; }
-	inline const JsonValue & get(int index) const { return this->array[(unsigned)index]; }
-	inline size_t getSize() const { return this->array.size(); }
-	inline JsonValue & operator [] (int index) { return this->get(index); }
-	inline const JsonValue & operator [] (int index) const { return this->get(index); }
+	JsonValue & get(int index) { return this->array[(unsigned)index]; }
+	const JsonValue & get(int index) const { return this->array[(unsigned)index]; }
+	size_t getSize() const { return this->array.size(); }
+	JsonValue & operator [] (int index) { return this->get(index); }
+	const JsonValue & operator [] (int index) const { return this->get(index); }
 };
 
 
@@ -166,14 +166,14 @@ class JsonPair
 public:
 	JsonPair(const std::string &name) : name(name) {}
 
-	inline void setName(const std::string &name) { this->name = name; }
-	inline std::string getName() const { return this->name; }
+	void setName(const std::string &name) { this->name = name; }
+	std::string getName() const { return this->name; }
 
-	inline void setValue(const JsonValue &value) { this->value = value; }
-	inline JsonValue getValue() const { return this->value; }
-	inline JsonValue * getReferenceValue() { return &this->value; }
+	void setValue(const JsonValue &value) { this->value = value; }
+	JsonValue getValue() const { return this->value; }
+	JsonValue * getReferenceValue() { return &this->value; }
 
-	inline bool equals(const std::string &name) const { return this->name == name; }
+	bool equals(const std::string &name) const { return this->name == name; }
 
 private:
 	std::string name;
@@ -187,20 +187,20 @@ public:
 	typedef std::list<JsonPair> Pairs;
 	typedef std::map<std::string, JsonValue *> PairMap;
 
-	inline void addPair(const JsonPair &p) { pairs.push_back(p); }
+	void addPair(const JsonPair &p) { pairs.push_back(p); }
 	void removePair(const std::string &name);
 
 	PairMap buildMap();
 
-	inline Pairs::iterator begin() { return pairs.begin(); }
-	inline Pairs::iterator end() { return pairs.end(); }
-	inline Pairs::const_iterator begin() const { return pairs.begin(); }
-	inline Pairs::const_iterator end() const { return pairs.end(); }
-	inline JsonPair & front() { return pairs.front(); }
-	inline const JsonPair & front() const { return pairs.front(); }
-	inline JsonPair & back() { return pairs.back(); }
-	inline const JsonPair & back() const { return pairs.back(); }
-	inline size_t getPairsSize() const { return pairs.size(); }
+	Pairs::iterator begin() { return pairs.begin(); }
+	Pairs::iterator end() { return pairs.end(); }
+	Pairs::const_iterator begin() const { return pairs.begin(); }
+	Pairs::const_iterator end() const { return pairs.end(); }
+	JsonPair & front() { return pairs.front(); }
+	const JsonPair & front() const { return pairs.front(); }
+	JsonPair & back() { return pairs.back(); }
+	const JsonPair & back() const { return pairs.back(); }
+	size_t getPairsSize() const { return pairs.size(); }
 
 private:
 	Pairs pairs;
@@ -234,21 +234,21 @@ public:
 
 	std::string toString() const;
 
-	inline void addPair(const JsonPair &p) { this->object.addPair(p); }
-	inline void removePair(const std::string &name) { this->object.removePair(name); }
+	void addPair(const JsonPair &p) { this->object.addPair(p); }
+	void removePair(const std::string &name) { this->object.removePair(name); }
 
-	inline Json & operator = (const Json &json) { this->object = json.object; return *this; }
+	Json & operator = (const Json &json) { this->object = json.object; return *this; }
 
-	inline PairMap buildMap() { return this->object.buildMap(); }
+	PairMap buildMap() { return this->object.buildMap(); }
 
-	inline Pairs::iterator begin() { return this->object.begin(); }
-	inline Pairs::iterator end() { return this->object.end(); }
-	inline Pairs::const_iterator begin() const { return this->object.begin(); }
-	inline Pairs::const_iterator end() const { return this->object.end(); }
-	inline JsonPair & front() { return this->object.front(); }
-	inline const JsonPair & front() const { return this->object.front(); }
-	inline JsonPair & back() { return this->object.back(); }
-	inline const JsonPair & back() const { return this->object.back(); }
+	Pairs::iterator begin() { return this->object.begin(); }
+	Pairs::iterator end() { return this->object.end(); }
+	Pairs::const_iterator begin() const { return this->object.begin(); }
+	Pairs::const_iterator end() const { return this->object.end(); }
+	JsonPair & front() { return this->object.front(); }
+	const JsonPair & front() const { return this->object.front(); }
+	JsonPair & back() { return this->object.back(); }
+	const JsonPair & back() const { return this->object.back(); }
 };
 
 #endif

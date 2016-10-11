@@ -12,8 +12,7 @@ public:
 
 	static void setText(const char *text);
 	static void setText(const char *text, int length);
-	static inline void setText(const std::string &text)
-	{ setText(text.data(), (int)text.length()); }
+	static void setText(const std::string &text);
 
 	static void addObserver(Observer *observer);
 	static void removeObserver(Observer *observer);

@@ -3,6 +3,18 @@
 #include "file/File.hpp"
 
 
+JsonContext::JsonContext(const char *path)
+{
+	this->open(path);
+}
+
+
+JsonContext::JsonContext(const void *data, size_t length)
+{
+	this->openFromMemory(data, length);
+}
+
+
 void JsonContext::open(const char *path)
 {
 	File file(path, File::READ);

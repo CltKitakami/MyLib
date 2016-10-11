@@ -25,6 +25,12 @@ void onTimedHandler(union sigval value)
 #endif
 
 
+Timer::~Timer()
+{
+	this->stop();
+}
+
+
 void Timer::setInterval(int periodMillisecond, int firstTimeMillisecond)
 {
 	if (firstTimeMillisecond == 0)

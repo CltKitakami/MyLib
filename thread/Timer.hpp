@@ -23,9 +23,9 @@ public:
 		self(0), interval(0), firstTime(0), isOneshot(false),
 		onTimedEvent(onTimedEvent), arg(arg) {}
 
-	virtual ~Timer() { this->stop(); }
+	virtual ~Timer();
 
-	inline int getInterval() const { return this->interval; }
+	int getInterval() const { return this->interval; }
 	void setInterval(int periodMillisecond, int firstTimeMillisecond = 0);
 
 	void oneshotReset();

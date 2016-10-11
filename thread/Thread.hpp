@@ -57,9 +57,9 @@ public:
 
 	void setRoutine(Routine routine, void *arg = nullptr);
 
-	inline void setBackground(bool value)
+	void setBackground(bool value)
 	{ this->isBackground = value; }	// Warning. Short thread shouldn't set background!
-	inline bool getBackground() const { return this->isBackground; }
+	bool getBackground() const { return this->isBackground; }
 
 #ifdef _WIN32
 	void setPriority(Thread::Priority value);
@@ -67,19 +67,19 @@ public:
 	void setPriority(int value);
 #endif
 
-	inline Thread::State getState() const { return this->state; };
+	Thread::State getState() const { return this->state; };
 
 #ifdef _WIN32
 	int resume();
 	int suspend();
 
-	inline HANDLE self() { return this->handle; }
+	HANDLE self() { return this->handle; }
 
-	static inline uint32_t getId() { return ::GetCurrentThreadId(); }
+	static uint32_t getId() { return ::GetCurrentThreadId(); }
 #else
-	inline pthread_t self() { return this->tid; }
+	pthread_t self() { return this->tid; }
 
-	static inline pthread_t getId() { return ::pthread_self(); }
+	static pthread_t getId() { return ::pthread_self(); }
 #endif
 
 	static void sleep(int milliSeconds);
@@ -87,7 +87,8 @@ public:
 private:
 #ifdef _WIN32
 	HANDLE beginThreadEx();
-	static inline void endThreadEx(unsigned int code = 0) { ::_endthreadex(code); }
+
+	static void endThreadEx(unsigned int code = 0) { ::_endthreadex(code); }
 
 	HANDLE handle;
 #else

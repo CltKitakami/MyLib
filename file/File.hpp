@@ -114,12 +114,12 @@ inline File::Mode operator ^ (File::Mode a, File::Mode b)
 { return (File::Mode)((int)a ^ (int)b); }
 
 inline File::Mode & operator |= (File::Mode &a, File::Mode b)
-{ return (File::Mode &)((int &)a |= (int)b); }
+{ a = (File::Mode)((int)a | (int)b); return a; }
 
 inline File::Mode & operator &= (File::Mode &a, File::Mode b)
-{ return (File::Mode &)((int &)a &= (int)b); }
+{ a = (File::Mode)((int)a & (int)b); return a; }
 
 inline File::Mode & operator ^= (File::Mode &a, File::Mode b)
-{ return (File::Mode &)((int &)a ^= (int)b); }
+{ a = (File::Mode)((int)a ^ (int)b); return a; }
 
 #endif

@@ -3,6 +3,18 @@
 #include "file/File.hpp"
 
 
+XmlContext::XmlContext(const char *path)
+{
+	this->open(path);
+}
+
+
+XmlContext::XmlContext(const void *data, size_t length)
+{
+	this->openFromMemory(data, length);
+}
+
+
 void XmlContext::open(const char *path)
 {
 	File file(path, File::READ);
