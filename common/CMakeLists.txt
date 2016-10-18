@@ -7,6 +7,7 @@ Backtrace.cpp
 Date.cpp
 Exception.cpp
 FilePath.cpp
+Hexdump.cpp
 Log.cpp
 MtRandom.cpp
 Stopwatch.cpp
