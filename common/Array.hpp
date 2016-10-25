@@ -55,9 +55,9 @@ public:
 	size_t getSize() const { return this->size; }
 
 	T * begin() { return this->data; }
-	const T * begin() const { return this->begin(); }
+	const T * begin() const { return this->data; }
 	T * end() { return this->data + this->size; }
-	const T * end() const { return this->end(); }
+	const T * end() const { return this->data + this->size; }
 
 	Array & operator = (const Array &array)
 	{ this->copy(array); return *this; }
