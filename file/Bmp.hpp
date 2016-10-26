@@ -14,7 +14,7 @@ public:
 	{
 		uint16_t id;
 		uint32_t fileSize;
-		uint32_t reserved ;
+		uint32_t reserved;
 		uint32_t dataOffset;
 		uint32_t dibHeaderSize;
 		uint32_t width;
@@ -52,6 +52,7 @@ public:
 
 private:
 	uint32_t getPadding() const { return header.width % 4; }
+	uint32_t getLineStep() const { return header.width * (uint32_t)getChannel(); }
 	void readHeader();
 	void writeHeader();
 	void fillHeader(const char buffer[HEADER_SIZE]);

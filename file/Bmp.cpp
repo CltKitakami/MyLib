@@ -51,7 +51,7 @@ void Bmp::read(ImageAttributes &attributes)
 {
 	Header &h = this->header;
 	File::SizeType padding = (File::SizeType)this->getPadding();
-	File::SizeType lineStep = (File::SizeType)(h.width * h.bitsPrePixel / 8);
+	File::SizeType lineStep = (File::SizeType)this->getLineStep();
 	char dump[3];
 
 	if (padding != 0)
@@ -74,7 +74,7 @@ void Bmp::write(ImageAttributes &attributes)
 {
 	Header &h = this->header;
 	File::SizeType padding = (File::SizeType)this->getPadding();
-	File::SizeType lineStep = (File::SizeType)(h.width * h.bitsPrePixel / 8);
+	File::SizeType lineStep = (File::SizeType)this->getLineStep();
 	char dump[3] = { 0, 0, 0 };
 
 	this->writeHeader();
@@ -172,16 +172,16 @@ void Bmp::fillHeader(const char buffer[HEADER_SIZE])
 void Bmp::createDefaultHeader(const SizeU &size, uint8_t channel)
 {
 	Header &h = this->header;
-	uint32_t width = size.width, height = size.height;
-	uint32_t imageSize = height * (width * channel + this->getPadding());
+	h.width = size.width;
+	h.height = size.height;
+
+	uint32_t imageSize = h.height * (h.width * channel + this->getPadding());
 
 	h.id = Convert::combineDualBytes('B', 'M');
 	h.fileSize = imageSize + HEADER_SIZE;
 	h.reserved = 0;
 	h.dataOffset = HEADER_SIZE;
 	h.dibHeaderSize = DIB_HEADER_SIZE;
-	h.width = width;
-	h.height = height;
 	h.planes = 1;
 	h.bitsPrePixel = channel * 8;
 	h.compression = 0;
