@@ -1,4 +1,3 @@
-#include <stdarg.h>
 #include <cstdio>
 #include <cstdlib>
 #include <cctype>

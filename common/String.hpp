@@ -1,6 +1,7 @@
 #ifndef _STRING_HPP_
 #define _STRING_HPP_
 
+#include <stdarg.h>
 #include <cstdint>
 #include <cstring>
 #include <string>
