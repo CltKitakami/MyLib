@@ -20,6 +20,7 @@ public:
 	Uri & operator = (const std::string &uri);
 
 	Type getType() const { return this->type; }
+	void setType(Type type) { this->type = type; }
 
 	uint16_t getPort() const { return this->port; }
 	void setPort(uint16_t port) { this->port = port; }
@@ -37,7 +38,6 @@ public:
 
 	static std::string encode(const std::string &str);
 	static std::string decode(const std::string &str);
-
 
 private:
 	size_t parseScheme(const std::string &uri);

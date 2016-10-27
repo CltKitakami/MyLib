@@ -50,11 +50,15 @@ public:
 
 	void get(const std::string &uri);
 	void get();
+
 	void post(const std::string &uri, const std::string &data);
 	void post(const std::string &data);
 
 	void setUri(const std::string &uri);
 	void setDefaultHeaders();
+
+	bool getSsl() const { return this->uri.getType() == Uri::HTTPS; }
+	void setSsl(bool isEnable);
 
 	uint16_t getPort() const { return this->uri.getPort(); }
 	void setPort(uint16_t port) { this->uri.setPort(port); }
@@ -91,7 +95,6 @@ private:
 	size_t getRemainHtmlLength();
 	void htmlDecompress();
 	void saveCookie();
-
 	bool isChunkedHtml();
 	bool isReceiveHtmlEnd();
 	bool isGzipHtml();

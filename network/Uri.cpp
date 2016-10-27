@@ -31,23 +31,26 @@ size_t Uri::parseScheme(const std::string &uri)
 {
 	const char *p = uri.data();
 	size_t startAt = 0;
-	this->type = HTTP;
-	this->port = 80;
 
 	if (p[0] == 'h' && p[1] == 't' && p[2] == 't' && p[3] == 'p')
 	{
 		if (p[4] == ':' && p[5] == '/' && p[6] == '/')
 		{
 			startAt = 7;
-			this->type = HTTP;
-			this->port = 80;
+			this->setType(HTTP);
+			this->setPort(80);
 		}
 		else if (p[4] == 's' && p[5] == ':' && p[6] == '/' && p[7] == '/')
 		{
 			startAt = 8;
-			this->type = HTTPS;
-			this->port = 443;
+			this->setType(HTTPS);
+			this->setPort(443);
 		}
+	}
+	else
+	{
+		this->setType(HTTP);
+		this->setPort(80);
 	}
 
 	return startAt;

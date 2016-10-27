@@ -134,6 +134,14 @@ void Http::setUri(const std::string &uri)
 	this->setHeader(HeaderContainer::HOST, this->uri.getHostName());
 }
 
+
+void Http::setSsl(bool isEnable)
+{
+	this->uri.setType(isEnable == true ? Uri::HTTPS : Uri::HTTP);
+	this->setNetMethods();
+}
+
+
 void Http::get(const std::string &uri)
 {
 	this->setUri(uri);
@@ -267,7 +275,6 @@ void Http::receive()
 		{
 			LOG.w(TRACE, "recv zero");
 			this->receiveHtml();
-
 		}
 
 #ifdef HTTP_DEBUG
