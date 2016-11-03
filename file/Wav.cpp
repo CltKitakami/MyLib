@@ -162,10 +162,9 @@ void Wav::save(const char *fileName, const Wav::Channels &channels)
 			Wav::getAverageBytesPerSecond(this->info);
 	}
 
-	File file(fileName, File::BINARY_WRITE);
-
-	this->writeHeader(file);
-	this->writeChannels(file, channels);
+	this->file.open(fileName, File::BINARY_WRITE);
+	this->writeHeader();
+	this->writeChannels(channels);
 }
 
 
@@ -185,7 +184,7 @@ void Wav::writeQuadBytes(const char *quad, char *out)
 }
 
 
-void Wav::writeHeader(File &file)
+void Wav::writeHeader()
 {
 	char header[Wav::HEADER_SIZE];
 	const uint16_t subChunk1Size = 16;
@@ -206,11 +205,11 @@ void Wav::writeHeader(File &file)
 	writeQuadBytes("data", &header[36]);
 	Convert::splitQuadBytes(this->info.dataByteSize, &header[40]);
 
-	file.write(header, Wav::HEADER_SIZE);
+	this->file.write(header, Wav::HEADER_SIZE);
 }
 
 
-void Wav::writeChannels(File &file, const Wav::Channels &channels)
+void Wav::writeChannels(const Wav::Channels &channels)
 {
 	if (channels.size() == 0)
 		return;
@@ -239,7 +238,7 @@ void Wav::writeChannels(File &file, const Wav::Channels &channels)
 		{
 			for (uint32_t c = 0; c < channels.size(); ++c)
 			{
-				file.write(channelPtr[c], (File::SizeType)bytesPreSample);
+				this->file.write(channelPtr[c], (File::SizeType)bytesPreSample);
 				channelPtr[c] += bytesPreSample;
 			}
 		}

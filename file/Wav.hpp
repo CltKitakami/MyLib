@@ -3,7 +3,7 @@
 
 #include <cstdint>
 #include <vector>
-#include "file/File.hpp"
+#include "file/BufferedFile.hpp"
 
 
 typedef struct WavInfo
@@ -50,11 +50,11 @@ public:
 private:
 	bool compareQuadBytes(const char *quad, const char *compared);
 	void writeQuadBytes(const char *quad, char *out);
-	void writeHeader(File &file);
-	void writeChannels(File &file, const Channels &channels);
+	void writeHeader();
+	void writeChannels(const Channels &channels);
 
 	WavInfo info;
-	File file;
+	BufferedFile file;
 };
 
 #endif
