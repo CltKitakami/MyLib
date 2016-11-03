@@ -3,6 +3,7 @@
 #include "Wav.hpp"
 #include "common/Exception.hpp"
 #include "common/Convert.hpp"
+#include "common/Log.hpp"
 
 
 Wav::Wav(const char *fileName)
@@ -104,6 +105,8 @@ Wav::Raw Wav::extractChannel(const Wav::Raw &wavBuffer,
 	const uint32_t channelBlockSize = blockAlign * bytesPreSample;
 	const uint32_t blockSize = channelBlockSize * this->info.channel;
 	const uint32_t totalBlock = this->info.dataByteSize / blockSize;
+	const uint32_t channelSize = this->info.dataByteSize / this->info.channel;
+	const uint32_t channelSamples = channelSize / bytesPreSample;
 
 	Raw channelBuffer;
 
@@ -112,11 +115,34 @@ Wav::Raw Wav::extractChannel(const Wav::Raw &wavBuffer,
 	const char *block = wavBuffer.data() + blockAlign * channelIndex;
 	char *out = &channelBuffer[0];
 
-	for (uint32_t i = 0; i < totalBlock; ++i)
+	// unroll loop
+	if (bytesPreSample == 2)
 	{
-		::memcpy(out, block, channelBlockSize);
-		out += channelBlockSize;
-		block += blockSize;
+		for (uint32_t i = 0; i < channelSamples; ++i)
+		{
+			out[0] = block[0];
+			out[1] = block[1];
+			out += 2;
+			block += blockAlign;
+		}
+	}
+	else if (bytesPreSample == 1)
+	{
+		for (uint32_t i = 0; i < channelSamples; ++i)
+		{
+			out[0] = block[0];
+			out += 1;
+			block += blockAlign;
+		}
+	}
+	else
+	{
+		for (uint32_t i = 0; i < channelSamples; ++i)
+		{
+			::memcpy(out, block, bytesPreSample);
+			out += bytesPreSample;
+			block += blockAlign;
+		}
 	}
 
 	return channelBuffer;
@@ -209,10 +235,13 @@ void Wav::writeChannels(File &file, const Wav::Channels &channels)
 
 	for (uint32_t i = 0; i < totalBlock; ++i)
 	{
-		for (uint32_t c = 0; c < channels.size(); ++c)
+		for (uint32_t a = 0; a < blockAlign; ++a)
 		{
-			file.write(channelPtr[c], (File::SizeType)channelBlockSize);
-			channelPtr[c] += channelBlockSize;
+			for (uint32_t c = 0; c < channels.size(); ++c)
+			{
+				file.write(channelPtr[c], (File::SizeType)bytesPreSample);
+				channelPtr[c] += bytesPreSample;
+			}
 		}
 	}
 }
