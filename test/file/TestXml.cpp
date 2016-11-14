@@ -17,9 +17,22 @@ int main()
 		XmlAttributeMap nameAttr = xmlElem["name"]->buildAttributeMap();
 
 		std::string name = xmlElem["name"]->getValue();
+
+		LOGP(xml.toString());
+		LOGP("===========");
 		LOGP("name = " << name);
 		LOGP("name.a = " << nameAttr["a"]->getValue());
 		LOGP("name.b = " << nameAttr["b"]->getValue());
+		LOGP("===========");
+
+		XmlElement elem("name2");
+		elem.addAttribute(XmlAttribute("width", "100"));
+		elem.addAttribute(XmlAttribute("height", "120"));
+		elem.addElement(XmlElement("name3"));
+		elem.setValue("test2");
+		xml.back().addElement(elem);
+
+		LOGP(xml.toString());
 	}
 	catch (Exception &ex)
 	{
