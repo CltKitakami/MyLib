@@ -32,6 +32,24 @@ int main()
 			map["obj2"]->getObject()->buildMap()["key3"]->
 				getObject()->buildMap()["key33"]->toString());
 		LOGP("key4 = " << map["key4"]->toString());
+		LOGP("===========");
+
+		JsonPair pair5("key5");
+		pair5.setValue(JsonValue::create(1.45e3));
+		json.addPair(pair5);
+
+		JsonPair pair6("key6");
+		JsonValue value6;
+		value6.createArray();
+
+		JsonArray *array6 = value6.getArray();
+		array6->put(JsonValue::create(std::string("a1")));
+		array6->put(JsonValue::create(std::string("a2")));
+
+		pair6.setValue(value6);
+		json.addPair(pair6);
+
+		LOGP(json.toString());
 	}
 	catch (Exception &ex)
 	{
