@@ -112,7 +112,7 @@ Wav::Raw Wav::extractChannel(const Wav::Raw &wavBuffer,
 
 	channelBuffer.resize(totalBlock * blockAlign * bytesPreSample);
 
-	const char *block = wavBuffer.data() + blockAlign * channelIndex;
+	const char *block = wavBuffer.data() + bytesPreSample * channelIndex;
 	char *out = &channelBuffer[0];
 
 	// unroll loop
