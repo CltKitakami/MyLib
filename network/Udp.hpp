@@ -11,7 +11,7 @@ class Udp : public Socket
 {
 	int sockaddrLen;
 public:
-	Udp() : sockaddrLen((int)sizeof(struct sockaddr)) {}
+	Udp() : sockaddrLen((int)sizeof(struct sockaddr_in)) {}
 	Udp(Socket::Id id) : Socket(id) {}
 
 	void open();
