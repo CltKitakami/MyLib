@@ -7,7 +7,7 @@ void createClient();
 
 int main()
 {
-	Wsa wsa;
+	Wsa wsa; (void)wsa;
 	createClient();
 
 	return 0;
@@ -23,46 +23,59 @@ void createClient()
 		SocketIdSet set(1);
 
 		client.open();
-		client.setBlocking(true);
+		client.setBlocking(false);
 
 		unsigned long addr = Socket::getHostByName("www.google.com.tw");
-		LOGF("IP: 0x%x", addr);
+		LOGP("IP: " << Socket::ipv4AddressToString(addr));
+
 		client.setAddress(addr);
 		client.setPort(80);
 
 		if (client.connect() != true)
 		{
+			LOGP("Wait to write");
 			set.reset();
-			set.writeAdd(client.id());
+			set.write.add(client.getId());
 			set.select();
+
 			if (client.connect() != true)
 				throw Exception(TRACE, "Can't connect.");
 		}
 
+		LOGP("Wait to write");
 		set.reset();
-		set.writeAdd(client.id());
+		set.write.add(client.getId());
 		set.select();
-		if (set.writeAvailable(client.id()))
+
+		if (set.write.available(client.getId()))
 			client.send("GET / HTTP/1.1\r\n\r\n");
+		else
+			throw Exception(TRACE, "Not available to send.");
 
+		LOGP("Wait to read");
 		set.reset();
-		set.readAdd(client.id());
-		set.select();
+		set.read.add(client.getId());
+		set.timedSelect(5000);
 
-		int recvBytes = client.receive(recvBuf, 1024);
-
-		if (recvBytes > 0)
+		if (set.read.available(client.getId()))
 		{
-			recvBuf[recvBytes] = '\0';
-			LOG.d("recvBytes = " << recvBytes);
-			LOG.d("[from server]: " << recvBuf);
-		}
+			int recvBytes = client.receive(recvBuf, 1024);
 
-		client.close();
+			if (recvBytes > 0)
+			{
+				recvBuf[recvBytes] = '\0';
+				LOGP("recvBytes = " << recvBytes);
+				LOGP("[from server]: " << recvBuf);
+			}
+		}
+		else
+		{
+			throw Exception(TRACE, "Receive timeouted.");
+		}
 	}
 	catch (Exception &ex)
 	{
-		LOG.d(ex.getMessage());
+		LOGP(ex.getMessage());
 	}
 
 	delete [] recvBuf;
