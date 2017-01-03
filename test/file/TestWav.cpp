@@ -1,6 +1,6 @@
 #include "common/Log.hpp"
 #include "common/Exception.hpp"
-#include "audfile/Wav.hpp"
+#include "file/Wav.hpp"
 
 
 int main()
@@ -29,7 +29,7 @@ int main()
 	}
 	catch (Exception ex)
 	{
-		MSG(ex.getMessage());
+		LOGP(ex.getMessage());
 	}
 
 	return 0;
