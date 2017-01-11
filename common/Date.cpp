@@ -247,7 +247,7 @@ Date Date::parse(const char *format, const char *timeString)
 	int *saveIntVariable = nullptr;
 	int *saveNameVariable = nullptr;
 
-	while (*f != '\0' && t != '\0')
+	while (*f != '\0' && *t != '\0')
 	{
 		switch (*f)
 		{
