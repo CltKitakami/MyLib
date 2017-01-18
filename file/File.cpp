@@ -188,7 +188,7 @@ void File::copyFrom(File &from, SizeType blockSize)
 			break;
 	}
 
-	delete buffer;
+	delete [] buffer;
 }
 
 
