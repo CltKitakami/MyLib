@@ -44,12 +44,15 @@ void Socket::open(Socket::Protocol protocol)
 
 void Socket::close()
 {
+	if (this->id != (Id)INVALID_SOCKET)
+	{
 #ifdef _WIN32
-	::closesocket(this->id);
+		::closesocket(this->id);
 #else
-	::close(this->id);
+		::close(this->id);
 #endif
-	this->id = (Id)INVALID_SOCKET;
+		this->id = (Id)INVALID_SOCKET;
+	}
 }
 
 
