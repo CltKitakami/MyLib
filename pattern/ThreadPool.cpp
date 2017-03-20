@@ -53,7 +53,6 @@ void WorkerThread::terminate()
 
 bool WorkerThread::waitRequest()
 {
-
 	if (this->state == EXIT)
 		return false;
 	else
