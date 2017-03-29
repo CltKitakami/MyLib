@@ -30,9 +30,9 @@ void ProcessTimes::report(std::ostream &stm) const
 {
 	Time time = this->elapsed();
 	stm << "user: ";
-	stm << Convert::toString((long double)time.user / 1000.0L);
+	stm << Convert::uintToString((unsigned long long)time.user);
 	stm << " us, system: ";
-	stm << Convert::toString((long double)time.system / 1000.0L);
+	stm << Convert::uintToString((unsigned long long)time.system);
 	stm << " us\n";
 }
 
@@ -46,8 +46,8 @@ void ProcessTimes::getTimes(Time &time)
 		(LPFILETIME)&time.system, (LPFILETIME)&time.user))
 	{
 		// Windows uses 100 nanosecond ticks
-		time.system *= 100;
-		time.user *= 100;
+		time.system *= 100.0 / 1000;
+		time.user *= 100.0 / 1000;
 	}
 	else
 	{
